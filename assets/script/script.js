@@ -22,13 +22,27 @@ var questionArr = [
     },
     {
         question: "Which of the following is the proper way to declare a for loop?",
-        answers: ["for(var loop = for; loop < for.length; =loop", 
+        answers: ["for(var loop = for; loop < for.length; =loop)", 
         "for i = 0 i < someArray.length i ++",
         "for(i=0; i < someArray.length; i++)",
         "do while(i < someArray.length)"],
         correctAns: 2,
     },
 ];
-var questionNum = 0;
+
 var score = 0;
 var answerCorrect = false;
+
+var questionEl = document.querySelector(".question");
+var answerEl = document.querySelector(".answers");
+
+//questionEl.textContent = questionArr[0]["question"];
+//answerEl.innerHTML ="<p>" + questionArr[0].answers[0] + "</p>"; 
+//console.log(answerEl)
+//console.log(questionArr);
+
+for (i = 0; i < questionArr.length; i++) {
+    questionEl.textContent = questionArr[i]["question"];
+    answerEl.appendChild("<button id = 'btn-0'>" + questionArr[i].answers[0] + "</button>");
+   // answerEl.innerHTML = "<button id = 'btn-1'>" + questionArr[i].answers[1] + "</button>";
+}
