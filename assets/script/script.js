@@ -1,5 +1,10 @@
 var questionArr = [
     {
+        question: "Welcome to the Quiz!!!",
+        answers: ["start"],
+        correctAns: 0,
+    },
+    {
         question: "What keyword is used to define a variable in JavaScript?",
         answers: ["bool", "int", "var", "function"] ,
         correctAns: 2,
@@ -32,6 +37,10 @@ var questionArr = [
 
 var score = 0;
 var answerCorrect = false;
+var currQuestion = 0;
+
+var button_0 = document.querySelector("#btn-0");
+
 
 var questionEl = document.querySelector(".question");
 var answerEl = document.querySelector(".answers");
@@ -41,8 +50,25 @@ var answerEl = document.querySelector(".answers");
 //console.log(answerEl)
 //console.log(questionArr);
 
-for (i = 0; i < questionArr.length; i++) {
-    questionEl.textContent = questionArr[i]["question"];
-    answerEl.appendChild("<button id = 'btn-0'>" + questionArr[i].answers[0] + "</button>");
    // answerEl.innerHTML = "<button id = 'btn-1'>" + questionArr[i].answers[1] + "</button>";
+var quizProgress = function() {
+    switch (currQuestion) {
+        case 0:
+            questionEl.textContent = questionArr[currQuestion].question;
+            document.querySelector("#btn-0").textContent = questionArr[currQuestion].answers[0];
+          //  if (event.target.value === )
+            currQuestion ++;
+            break;
+        case 1:
+            questionEl.textContent = questionArr[currQuestion].question;
+            document.querySelector("#btn-0").textContent = questionArr[currQuestion].answers[0];
+            document.querySelector("#btn-1").textContent = questionArr[currQuestion].answers[1];
+            document.querySelector("#btn-2").textContent = questionArr[currQuestion].answers[2];
+            document.querySelector("#btn-3").textContent = questionArr[currQuestion].answers[3];
+            currQuestion ++;
+            break;
+    }
 }
+
+quizProgress();
+document.querySelector(".answer").addEventListener("click");
