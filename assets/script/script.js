@@ -1,44 +1,50 @@
 //Array holding questions and answers
-//each question has isFalse or isCorrect attached
+//each question has boolean correctAns attached
 var questionArr = [
     {
         id: 0,
         question: "What keyword is used to define a variable in JavaScript?",
-        answers: ["bool", "int", "var", "function"] ,
-        correctAns: 2,
+        answers: [{text:"bool", correctAns: false},
+                  {text:"int", correctAns: false},
+                  {text:"var", correctAns: true}, 
+                  {text:"function", correctAns: false}],
     },
     {
         id: 1,
         question: `var myFunction = function()
         Is an example of what kind of function?`,
-        answers: ["Function Declaration", "Function Call", "Method", "Function Expression"],
-        correctAns: 3,
+        answers: [{text:"Function Declaration", correctAns: false},
+                  {text:"Function Call", correctAns: false},
+                  {text:"Method", correctAns: false},
+                  {text:"Function Expression", correctAns: true}],
     },
     {
         id: 2,
         question: "What does DOM stand for?" ,
-        answers: ["Document Object Model", "District Oriented Mama", "Direct Object Model", "Drink Orange Milk"],
-        correctAns: 0,
+        answers: [{text:"Document Object Model", correctAns: true},
+                  {text:"District Oriented Mama", correctAns: false},
+                  {text:"Direct Object Model", correctAns: false},
+                  {text:"Drink Orange Milk", correctAns: false}],
     },
     {
         id: 3,
         question: "An if/else statement is also known as what?",
-        answers: ["Correctional statement", "Conditional statement", "Switch case", "What if statement"],
-        correctAns: 1,
+        answers: [{text:"Correctional statement", correctAns: false},
+                  {text:"Conditional statement", correctAns: true},
+                  {text:"Switch case", correctAns: false},
+                  {text:"What if statement", correctAns: false}],
     },
     {
         id: 4,
         question: "Which of the following is the proper way to declare a for loop?",
-        answers: ["for(var loop = for; loop < for.length; =loop)", 
-        "for i = 0 i < someArray.length i ++",
-        "for(i=0; i < someArray.length; i++)",
-        "do while(i < someArray.length)"],
-        correctAns: 2,
+        answers: [{text:"for(var loop = for; loop < for.length; =loop)", correctAns: false}, 
+                  {text:"for i = 0 i < someArray.length i ++", correctAns: false},
+                  {text:"for(i=0; i < someArray.length; i++)", correctAns: true},
+                  {text:"do while(i < someArray.length)", correctAns: false}],
     },
 ];
 
 var score = 0;
-var currQuestion = 0;
 var id = 0;
 //Creates element variables to target HTML 
 var questionEl = document.querySelector(".question-display");
@@ -84,6 +90,11 @@ var endGame = function() {
     btn3.remove();
 };
 
+//Checks if answer is correct, increments ID and calls iterate again to move quiz forward
+var checkAns = function() {
+    
+}
+
 var iterate = function(id) {
     //Checks to see if this is the first question in quiz, adds the remaining option buttons if true
     if (id === 0) {
@@ -97,10 +108,10 @@ var iterate = function(id) {
         endGame();
     }
     questionEl.textContent = questionArr[id].question;
-    btn0.textContent = questionArr[id].answers[0];
-    btn1.textContent = questionArr[id].answers[1];
-    btn2.textContent = questionArr[id].answers[2];
-    btn3.textContent = questionArr[id].answers[3];
+    btn0.textContent = questionArr[id].answers[0].text;
+    btn1.textContent = questionArr[id].answers[1].text;
+    btn2.textContent = questionArr[id].answers[2].text;
+    btn3.textContent = questionArr[id].answers[3].text;
 
     btn0.addEventListener("click", function() {
         id ++;
