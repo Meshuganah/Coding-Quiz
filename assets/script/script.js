@@ -44,13 +44,20 @@ var questionArr = [
     },
 ];
 
+var timeLeft = 75;
 var score = 0;
 var id = 0;
 //Creates element variables to target HTML 
 var questionEl = document.querySelector(".question-display");
 var answerEl = document.querySelector(".answer-bank");
+var timerEl = document.querySelector(".timer");
+var evaluateEl = document.querySelector(".evaluate");
 
 //Creates elements to append questions as quiz progresses
+var btnStart = document.createElement("button");
+btnStart.className = "answerButton";
+btnStart.id = "btnStart";
+
 var btn0 = document.createElement("button");
 btn0.className = "answerButton";
 btn0.id = "btn0";
@@ -67,18 +74,22 @@ var btn3 = document.createElement("button");
 btn3.className = "answerButton";
 btn3.id = "btn3";
 
-questionEl.textContent = `Welcome to the Coding Quiz! This is a timed quiz, and each question will have 4 options. 
-Click the start button below to begin!`;
-btn0.textContent = "Start";
-answerEl.appendChild(btn0);
-
 //Starts the quiz once the start button is clicked
-//TODO potentially add timer start here
+//Adds timer and timer display to quiz
 var start = function() {
-    btn0.addEventListener("click", function() {
-        iterate(id); 
-    }
-)};
+    btnStart.addEventListener("click", function() {
+        iterate(id);
+        var timer = setInterval(function() {
+            if (timeLeft >= 0) {
+                timerEl.textContent = timeLeft;
+                timeLeft --;
+            } else {
+                clearInterval(timer);
+                endGame();
+            }
+        }, 1000); 
+        })
+};
 
 //Function to endgame
 //TODO display high score list, add option to record high score
@@ -91,22 +102,36 @@ var endGame = function() {
 };
 
 //Checks if answer is correct, increments ID and calls iterate again to move quiz forward
-//TODO add an else statement that subtracts time if answer is wrong 
-//TODO add a timer attached to a statement declaring right or wrong answer
 var checkAns = function(event) {
     var correctEl = event.target.getAttribute("data-answer");
-    console.log(correctEl);
+
     if (correctEl === "true") {
-        score = score + 10;
-    } 
-    id ++;
-    iterate(id);
-    console.log(score);
+        score += 10;
+        id ++;
+        iterate(id);
+        evaluateEl.textContent = "That is correct!";
+        answerClear;
+
+    } else {
+        timeLeft -= 10;
+        id ++;
+        iterate(id);
+        evaluateEl.textContent = "That is not correct!";
+        answerClear;
+    }
 }
 
+//Timer to clear evaluateEl
+var answerClear = setInterval(function() {
+    evaluateEl.textContent = "";
+}, 3000)
+
 var iterate = function(id) {
+    //Removes start button
+    btnStart.remove();
     //Checks to see if this is the first question in quiz, adds the remaining option buttons if true
     if (id === 0) {
+        answerEl.appendChild(btn0);
         answerEl.appendChild(btn1);
         answerEl.appendChild(btn2);
         answerEl.appendChild(btn3);
@@ -138,6 +163,12 @@ var iterate = function(id) {
     btn3.addEventListener("click", checkAns);
     };
 }
+
+//Landing page, adds separate start button to prevent timer from firing multiple times
+questionEl.textContent = `Welcome to the Coding Quiz! This is a timed quiz, and each question will have 4 options. 
+Click the start button below to begin!`;
+btnStart.textContent = "Start";
+answerEl.appendChild(btnStart);
 
 start();
 //questionEl.textContent = questionArr[0]["question"];
