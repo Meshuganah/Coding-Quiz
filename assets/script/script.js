@@ -91,8 +91,15 @@ var endGame = function() {
 };
 
 //Checks if answer is correct, increments ID and calls iterate again to move quiz forward
-var checkAns = function() {
-    
+var checkAns = function(event) {
+    var isCorrect = event.target.questionArr[id].answers.correctAns;
+    if (isCorrect) {
+        score = score + 10;
+    }
+    id ++;
+    iterate(id);
+    console.log(score);
+    console.log(isCorrect)
 }
 
 var iterate = function(id) {
@@ -113,10 +120,7 @@ var iterate = function(id) {
     btn2.textContent = questionArr[id].answers[2].text;
     btn3.textContent = questionArr[id].answers[3].text;
 
-    btn0.addEventListener("click", function() {
-        id ++;
-        iterate(id);
-    });
+    btn0.addEventListener("click", checkAns);
 
     btn1.addEventListener("click", function() {
         id ++;
