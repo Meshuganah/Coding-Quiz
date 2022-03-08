@@ -91,6 +91,8 @@ var endGame = function() {
 };
 
 //Checks if answer is correct, increments ID and calls iterate again to move quiz forward
+//TODO add an else statement that subtracts time if answer is wrong 
+//TODO add a timer attached to a statement declaring right or wrong answer
 var checkAns = function(event) {
     var correctEl = event.target.getAttribute("data-answer");
     console.log(correctEl);
@@ -113,7 +115,7 @@ var iterate = function(id) {
     //Checks to see if player has answered all the questions
     if (id === questionArr.length) {
         endGame();
-    }
+    } else {
     questionEl.textContent = questionArr[id].question;
     btn0.textContent = questionArr[id].answers[0].text;
     btn0.setAttribute("data-answer", questionArr[id].answers[0].correctAns);
@@ -134,6 +136,7 @@ var iterate = function(id) {
     btn2.addEventListener("click", checkAns);
 
     btn3.addEventListener("click", checkAns);
+    };
 }
 
 start();
