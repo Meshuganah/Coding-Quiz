@@ -74,16 +74,51 @@ var start = function() {
     }
 )};
 
+var endGame = function() {
+    questionEl.textContent = `Congratulations! Your score is ${score}!`
+    btn0.remove();
+    btn1.remove();
+    btn2.remove();
+    btn3.remove();
+};
+
 var iterate = function(id) {
+    //Checks to see if this is the first question in quiz, adds the remaining option buttons if true
     if (id === 0) {
         answerEl.appendChild(btn1);
         answerEl.appendChild(btn2);
         answerEl.appendChild(btn3);
     }
+
+    //Checks to see if player has answered all the questions
+    if (id === questionArr.length) {
+        endGame();
+    }
+    questionEl.textContent = questionArr[id].question;
     btn0.textContent = questionArr[id].answers[0];
     btn1.textContent = questionArr[id].answers[1];
     btn2.textContent = questionArr[id].answers[2];
     btn3.textContent = questionArr[id].answers[3];
+
+    btn0.addEventListener("click", function() {
+        id ++;
+        iterate(id);
+    });
+
+    btn1.addEventListener("click", function() {
+        id ++;
+        iterate(id);
+    });
+
+    btn2.addEventListener("click", function() {
+        id ++;
+        iterate(id);
+    });
+
+    btn3.addEventListener("click", function() {
+        id ++;
+        iterate(id);
+    })
 }
 
 start();
