@@ -74,6 +74,8 @@ var start = function() {
     }
 )};
 
+//Function to endgame
+//TODO display high score list, add option to record high score
 var endGame = function() {
     questionEl.textContent = `Congratulations! Your score is ${score}!`
     btn0.remove();
