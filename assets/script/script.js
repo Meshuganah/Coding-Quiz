@@ -4,10 +4,10 @@ var questionArr = [
     {
         id: 0,
         question: "What keyword is used to define a variable in JavaScript?",
-        answers: [{text:"bool", correctAns: false},
-                  {text:"int", correctAns: false},
-                  {text:"var", correctAns: true}, 
-                  {text:"function", correctAns: false}],
+        answers: [{text:"bool", correctAns: "false"},
+                  {text:"int", correctAns: "false"},
+                  {text:"var", correctAns: "true"}, 
+                  {text:"function", correctAns: "false"}],
     },
     {
         id: 1,
@@ -92,14 +92,14 @@ var endGame = function() {
 
 //Checks if answer is correct, increments ID and calls iterate again to move quiz forward
 var checkAns = function(event) {
-    var isCorrect = event.target.questionArr[id].answers.correctAns;
-    if (isCorrect) {
+    var correctEl = event.target.getAttribute("data-answer");
+    console.log(correctEl);
+    if (correctEl === "true") {
         score = score + 10;
-    }
+    } 
     id ++;
     iterate(id);
     console.log(score);
-    console.log(isCorrect)
 }
 
 var iterate = function(id) {
@@ -116,26 +116,24 @@ var iterate = function(id) {
     }
     questionEl.textContent = questionArr[id].question;
     btn0.textContent = questionArr[id].answers[0].text;
+    btn0.setAttribute("data-answer", questionArr[id].answers[0].correctAns);
+
     btn1.textContent = questionArr[id].answers[1].text;
+    btn1.setAttribute("data-answer", questionArr[id].answers[1].correctAns);
+
     btn2.textContent = questionArr[id].answers[2].text;
+    btn2.setAttribute("data-answer", questionArr[id].answers[2].correctAns);
+
     btn3.textContent = questionArr[id].answers[3].text;
+    btn3.setAttribute("data-answer", questionArr[id].answers[3].correctAns);
 
     btn0.addEventListener("click", checkAns);
 
-    btn1.addEventListener("click", function() {
-        id ++;
-        iterate(id);
-    });
+    btn1.addEventListener("click", checkAns);
 
-    btn2.addEventListener("click", function() {
-        id ++;
-        iterate(id);
-    });
+    btn2.addEventListener("click", checkAns);
 
-    btn3.addEventListener("click", function() {
-        id ++;
-        iterate(id);
-    })
+    btn3.addEventListener("click", checkAns);
 }
 
 start();
