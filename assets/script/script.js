@@ -47,10 +47,11 @@ var questionArr = [
 var timeLeft = 75;
 var score = 0;
 var id = 0;
+var highScores = [];
 //Creates element variables to target HTML 
+var timerEl = document.querySelector(".timer");
 var questionEl = document.querySelector(".question-display");
 var answerEl = document.querySelector(".answer-bank");
-var timerEl = document.querySelector(".timer");
 var evaluateEl = document.querySelector(".evaluate");
 
 //Creates elements to append questions as quiz progresses
@@ -77,6 +78,10 @@ btn3.id = "btn3";
 //Starts the quiz once the start button is clicked
 //Adds timer and timer display to quiz
 var start = function() {
+    questionEl.textContent = `Welcome to the Coding Quiz! This is a timed quiz, and each question will have 4 options. 
+Click the start button below to begin!`;
+    btnStart.textContent = "Start";
+    answerEl.appendChild(btnStart);
     btnStart.addEventListener("click", function() {
         iterate(id);
         var timer = setInterval(function() {
@@ -94,11 +99,15 @@ var start = function() {
 //Function to endgame
 //TODO display high score list, add option to record high score
 var endGame = function() {
-    questionEl.textContent = `Congratulations! Your score is ${score}!`
+    questionEl.textContent = `Congratulations! Your score is ${score}!`;
+
+    timerEl.remove();
     btn0.remove();
     btn1.remove();
     btn2.remove();
     btn3.remove();
+    id = 0;
+
 };
 
 //Checks if answer is correct, increments ID and calls iterate again to move quiz forward
@@ -164,17 +173,4 @@ var iterate = function(id) {
     };
 }
 
-//Landing page, adds separate start button to prevent timer from firing multiple times
-questionEl.textContent = `Welcome to the Coding Quiz! This is a timed quiz, and each question will have 4 options. 
-Click the start button below to begin!`;
-btnStart.textContent = "Start";
-answerEl.appendChild(btnStart);
-
 start();
-//questionEl.textContent = questionArr[0]["question"];
-//answerEl.innerHTML ="<p>" + questionArr[0].answers[0] + "</p>"; 
-//console.log(answerEl)
-//console.log(questionArr);
-
-// answerEl.innerHTML = "<button id = 'btn-1'>" + questionArr[i].answers[1] + "</button>";
-
