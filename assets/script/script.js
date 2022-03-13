@@ -4,10 +4,10 @@ var questionArr = [
     {
         id: 0,
         question: "What keyword is used to define a variable in JavaScript?",
-        answers: [{text:"bool", correctAns: "false"},
-                  {text:"int", correctAns: "false"},
-                  {text:"var", correctAns: "true"}, 
-                  {text:"function", correctAns: "false"}],
+        answers: [{text:"bool", correctAns: false},
+                  {text:"int", correctAns: false},
+                  {text:"var", correctAns: true}, 
+                  {text:"function", correctAns: false}],
     },
     {
         id: 1,
@@ -47,14 +47,15 @@ var questionArr = [
 var timeLeft = 75;
 var score = 0;
 var id = 0;
-var highScores = [];
+var scoreRecord = [];
+
 //Creates element variables to target HTML 
 var timerEl = document.querySelector(".timer");
 var questionEl = document.querySelector(".question-display");
 var answerEl = document.querySelector(".answer-bank");
 var evaluateEl = document.querySelector(".evaluate");
 
-//Creates elements to append questions as quiz progresses
+//Creates elements to dynamically create HTML elements as quiz progresses
 var btnStart = document.createElement("button");
 btnStart.className = "answerButton";
 btnStart.id = "btnStart";
@@ -78,6 +79,8 @@ btn3.id = "btn3";
 //Starts the quiz once the start button is clicked
 //Adds timer and timer display to quiz
 var start = function() {
+    loadScores();
+    console.log(scoreRecord);
     questionEl.textContent = `Welcome to the Coding Quiz! This is a timed quiz, and each question will have 4 options. 
 Click the start button below to begin!`;
     btnStart.textContent = "Start";
@@ -90,25 +93,40 @@ Click the start button below to begin!`;
                 timeLeft --;
             } else {
                 clearInterval(timer);
+                scoreRecord.push(score);
                 endGame();
             }
         }, 1000); 
         })
-};
+    };
 
 //Function to endgame
 //TODO display high score list, add option to record high score
 var endGame = function() {
     questionEl.textContent = `Congratulations! Your score is ${score}!`;
-
+    answerEl.textContent = `Check your local storage for a list of your scores!`;
+    
     timerEl.remove();
     btn0.remove();
     btn1.remove();
     btn2.remove();
     btn3.remove();
-    id = 0;
+
+    localStorage.setItem("pastScores", JSON.stringify(scoreRecord));
 
 };
+
+//Loads scores from local storage
+var loadScores = function() {
+    var savedScores = localStorage.getItem("pastScores");
+
+    if (!savedScores) {
+        return false;
+    } else {
+        savedScores = JSON.parse(savedScores);
+        scoreRecord = savedScores;
+    }
+}
 
 //Checks if answer is correct, increments ID and calls iterate again to move quiz forward
 var checkAns = function(event) {
@@ -148,6 +166,7 @@ var iterate = function(id) {
 
     //Checks to see if player has answered all the questions
     if (id === questionArr.length) {
+        scoreRecord.push(score);
         endGame();
     } else {
     questionEl.textContent = questionArr[id].question;
