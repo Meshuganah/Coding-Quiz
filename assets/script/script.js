@@ -89,7 +89,7 @@ Click the start button below to begin!`;
         iterate(id);
         var timer = setInterval(function() {
             if (timeLeft >= 0) {
-                timerEl.textContent = timeLeft;
+                timerEl.textContent = `Time Remaining: ${timeLeft}`;
                 timeLeft --;
             } else {
                 clearInterval(timer);
